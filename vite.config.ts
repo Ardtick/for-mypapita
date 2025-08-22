@@ -17,7 +17,7 @@ export default defineConfig({
       : []),
   ],
   
-  base: "/<for-mypapita>/",
+  base: "/for-mypapita/",
   
   resolve: {
     alias: {

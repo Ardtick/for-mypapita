@@ -20,7 +20,7 @@ export default defineConfig({
 
   build: {
     // 👇 jangan "dist/public", cukup "dist"
-    outDir: path.resolve(__dirname, "dist"),
+    outDir: "dist",
     emptyOutDir: true,
   },
 });

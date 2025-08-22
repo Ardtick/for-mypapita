@@ -17,7 +17,7 @@ export default defineConfig({
       : []),
   ],
   
-  base: "/<nama-repo>/",
+  base: "/<for-mypapita>/",
   
   resolve: {
     alias: {

@@ -16,6 +16,9 @@ export default defineConfig({
         ]
       : []),
   ],
+  
+  base: "/<nama-repo>/",
+  
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "client", "src"),

@@ -1,0 +1,103 @@
+import { useState, useEffect } from "react"; import { motion } from "framer-motion"; import { FaHeart } from "react-icons/fa";
+
+export default function App() { const [step, setStep] = useState(1); const [name, setName] = useState(""); const [partner, setPartner] = useState(""); const [error, setError] = useState(""); const [loveValue, setLoveValue] = useState(50); const [music, setMusic] = useState(null); const [showEnding, setShowEnding] = useState(false);
+
+const validNames = [ "pavita","papita","pavita rheanne","papita rheanne", "pavita rheanne alastair","papita rheanne alastair", "pavita","papita","pavita rheanne","papita rheanne", "pavita rheanne alastair","papita rheanne alastair", "pavita rheanne","pavita rheanne alastair", "pavita","papita","pavita rheanne","papita rheanne alastair", "pavita rheanne","pavita rheanne alastair", "pavita","papita","pavita rheanne","pavita rheanne alastair", "pavita rheanne","pavita rheanne alastair", "pavita","papita","pavita rheanne","pavita rheanne alastair", "pavita rheanne","pavita rheanne alastair", "pavita rheanne","pavita rheanne alastair", "pavita rheanne","pavita rheanne alastair", "pavita","papita","pavita rheanne","pavita rheanne alastair", "pavita rheanne","pavita rheanne alastair","pavita rheanne","pavita rheanne alastair", "pavita rheanne","pavita rheanne alastair", "pavita","papita","pavita rheanne","pavita rheanne alastair", "pavita rheanne","pavita rheanne alastair" ];
+
+const validPartners = [ "heru","heiu","heru dewanto","heiu dewanto","heru","heiu","heru dewanto","heiu dewanto" ];
+
+useEffect(() => { if (step === 2 && !music) { const audio = new Audio("https://files.catbox.moe/7j1t0v.mp3"); // Green Tea & Honey audio.loop = true; audio.play(); setMusic(audio); } }, [step, music]);
+
+const handleNameSubmit = (e) => { e.preventDefault(); if (validNames.includes(name.toLowerCase())) { setError(""); setStep(2); } else { setError("Trverifkasi BKAN LUKH ORGNA! / Lukh BKAN trgetna!!!"); } };
+
+const handlePartnerSubmit = (e) => { e.preventDefault(); if (validPartners.includes(partner.toLowerCase())) { setError(""); setStep(3); } else { setError("SAPA ITU?!! / ITU BKAN PCAL KM😤"); } };
+
+const Petals = () => ( <div className="pointer-events-none fixed inset-0 overflow-hidden z-50"> {[...Array(20)].map((_, i) => ( <motion.div key={i} className="absolute text-pink-300 text-3xl" initial={{ y: -50, x: Math.random() * window.innerWidth, opacity: 0 }} animate={{ y: window.innerHeight + 50, opacity: 1 }} transition={{ duration: 8 + Math.random() * 5, repeat: Infinity, delay: Math.random() * 5, }} > 🌸 </motion.div> ))} </div> );
+
+return ( <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-50 via-rose-100 to-pink-200 text-gray-800 p-4 relative overflow-hidden"> <div className="max-w-md w-full bg-white rounded-2xl shadow-2xl p-6 text-center relative z-10"> {step === 1 && ( <form onSubmit={handleNameSubmit}> <h1 className="text-xl font-semibold mb-4">Siapa namamu?</h1> <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="w-full border p-2 rounded mb-2" /> {error && <p className="text-red-500 mb-2">{error}</p>} <button className="bg-pink-400 text-white px-4 py-2 rounded-full shadow hover:bg-pink-500"> Lanjut ➝ </button> </form> )}
+
+{step === 2 && (
+      <form onSubmit={handlePartnerSubmit}>
+        <h1 className="text-xl font-semibold mb-4">{name} pacalna siapa ini?</h1>
+        <input
+          type="text"
+          value={partner}
+          onChange={(e) => setPartner(e.target.value)}
+          className="w-full border p-2 rounded mb-2"
+        />
+        {error && <p className="text-red-500 mb-2">{error}</p>}
+        <button className="bg-pink-400 text-white px-4 py-2 rounded-full shadow hover:bg-pink-500">
+          Lanjut ➝
+        </button>
+      </form>
+    )}
+
+    {step === 3 && (
+      <div>
+        <h1 className="text-xl font-semibold mb-6">{name} sayang {partner} gak?</h1>
+        <div className="flex justify-center gap-4">
+          <button
+            onClick={() => setStep(4)}
+            className="bg-pink-500 text-white px-6 py-2 rounded-full shadow hover:bg-pink-600"
+          >
+            Ya 💖
+          </button>
+          <motion.button
+            whileHover={{ x: Math.random() * 100 - 50, y: Math.random() * 50 - 25 }}
+            className="bg-gray-300 text-gray-700 px-6 py-2 rounded-full shadow"
+          >
+            Tidak 🙅🏻‍♂️
+          </motion.button>
+        </div>
+      </div>
+    )}
+
+    {step === 4 && (
+      <div>
+        <h1 className="text-xl font-semibold mb-6">Seberapa sayang {name} sama {partner}?</h1>
+        <input
+          type="range"
+          min="1"
+          max="100"
+          value={loveValue}
+          onChange={(e) => setLoveValue(e.target.value)}
+          className="w-full"
+        />
+        <p className="mt-2">{loveValue}%</p>
+        <button
+          onClick={() => setStep(5)}
+          className="mt-4 bg-pink-400 text-white px-4 py-2 rounded-full shadow hover:bg-pink-500"
+        >
+          Submit
+        </button>
+      </div>
+    )}
+
+    {step === 5 && (
+      <div>
+        <h1 className="text-xl font-semibold mb-6">aku lebih sayang kamu disetiap heLaan napasku🧎🏻‍♂️</h1>
+        <button
+          onClick={() => setShowEnding(true)}
+          className="flex items-center justify-center gap-2 mt-6 bg-red-500 text-white px-6 py-3 rounded-full shadow hover:bg-red-600 mx-auto"
+        >
+          <FaHeart className="text-2xl" /> Klik ini sayang ❤️
+        </button>
+      </div>
+    )}
+
+    {showEnding && (
+      <div className="relative">
+        <h1 className="text-2xl font-bold mb-4">happy 10th month sayang 🤍</h1>
+        <img
+          src="https://placekitten.com/400/300"
+          alt="Our Memory"
+          className="rounded-2xl shadow-lg mx-auto"
+        />
+        <Petals />
+      </div>
+    )}
+  </div>
+</div>
+
+); }
+
